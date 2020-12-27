@@ -37,8 +37,6 @@ jobs:
         run: |
           if [ -f docker-compose.yml ]; then
             docker-compose --file docker-compose.yml build
-            docker-compose --file docker-compose.yml run
-
           else
             echo "Docker Build Not Implemented Yet!"
           fi
@@ -78,5 +76,8 @@ jobs:
             # Checking Doctl connect to docker 
             snap connect doctl:dot-docker
             
-            # Run a new container from a new image
+            # Run a new container from a new image 
+            # docker-compose --file docker-compose.yml run \
+            docker imeges
+            docker ps
             docker run -d -p 8000:80 --name $(echo $IMAGE_NAME) $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
