@@ -10,7 +10,6 @@ on:
 
 env:
   REGISTRY: "registry.digitalocean.com/${{secrets.DIGITALOCEAN_CONTAINER_REGISTRY}}"
-  IMAGE_NAME: webui
 
 jobs:
   docker_test:
@@ -51,7 +50,7 @@ jobs:
       - name: Log in to DigitalOcean Container Registry with short-lived credentials
         run: doctl registry login
 
-      - name: Push image to DigitalOcean Container Registry=> $(echo $REGISTRY)/$(echo $IMAGE_NAME):dev
+      - name: Push image to DigitalOcean Container Registry
         run: docker-compose push 
 
   deploy:
@@ -66,19 +65,18 @@ jobs:
           HOST: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
-          envs: IMAGE_NAME,REGISTRY,GITHUB_SHA
+          envs: REGISTRY,GITHUB_SHA
           script: |
-            # Stop running container
-            docker stop $(echo $IMAGE_NAME)
 
-            # Remove old container
-            docker rm $(echo $IMAGE_NAME)
-            
+            # Snap like a Snack
             # Checking Doctl connect to docker 
             snap connect doctl:dot-docker
             
+            # Let see what you have
+            docker-compose ps
+            
+            # Stop running container
+            docker-compose down
+
             # Run a new container from a new image 
-            # docker-compose --file docker-compose.yml run \
-            docker imeges
-            docker ps
-            docker run -d -p 8000:80 --name $(echo $IMAGE_NAME) $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
+            docker-compose up -d 
