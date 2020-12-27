@@ -27,4 +27,19 @@ jobs:
           else
             echo "Docker Test Not Implemented Yet!"
           fi
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        
+      - name: Docker Buils a Stack
+        run: |
+          if [ -f docker-compose.yml ]; then
+            docker-compose --file docker-compose.yml build
+            docker-compose --file docker-compose.yml run sut
+          else
+            echo "Docker Build Not Implemented Yet!"
+          fi
 
