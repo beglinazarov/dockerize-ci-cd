@@ -10,7 +10,7 @@ on:
 
 env:
   REGISTRY: "registry.digitalocean.com/${{secrets.DIGITALOCEAN_CONTAINER_REGISTRY}}"
-  IMAGE_NAME: webui-dev
+  IMAGE_NAME: qbx-ix
 
 jobs:
   docker_test:
@@ -51,7 +51,7 @@ jobs:
         run: doctl registry login
 
       - name: Push image to DigitalOcean Container Registry
-        run: docker-compose push $(echo $REGISTRY)
+        run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME):dev
 
   deploy:
     runs-on: ubuntu-latest
