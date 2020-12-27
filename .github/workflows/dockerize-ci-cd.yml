@@ -36,7 +36,7 @@ jobs:
       - name: Docker Buils a Stack
         run: |
           if [ -f docker-compose.yml ]; then
-            docker-compose --file docker-compose.yml build
+            docker-compose --file docker-compose.yml --file docker-compose.dev.yml build
           else
             echo "Docker Build Not Implemented Yet!"
           fi
