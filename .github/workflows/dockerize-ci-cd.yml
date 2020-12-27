@@ -10,7 +10,7 @@ on:
 
 env:
   REGISTRY: "registry.digitalocean.com/${{secrets.DIGITALOCEAN_CONTAINER_REGISTRY}}"
-  IMAGE_NAME: qbx-ix
+  IMAGE_NAME: webui
 
 jobs:
   docker_test:
@@ -37,6 +37,7 @@ jobs:
         run: |
           if [ -f docker-compose.yml ]; then
             docker-compose --file docker-compose.yml build
+            docker-compose ps
           else
             echo "Docker Build Not Implemented Yet!"
           fi
@@ -50,8 +51,8 @@ jobs:
       - name: Log in to DigitalOcean Container Registry with short-lived credentials
         run: doctl registry login
 
-      - name: Push image to DigitalOcean Container Registry
-        run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME):dev
+      - name: Push image to DigitalOcean Container Registry=> $(echo $REGISTRY)/$(echo $IMAGE_NAME):dev
+        run: docker-compose push 
 
   deploy:
     runs-on: ubuntu-latest
