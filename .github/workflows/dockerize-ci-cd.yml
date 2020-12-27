@@ -27,7 +27,6 @@ jobs:
           else
             echo "Docker Test Not Implemented Yet!"
           fi
-jobs:
   build:
     runs-on: ubuntu-latest
 
