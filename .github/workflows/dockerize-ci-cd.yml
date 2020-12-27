@@ -5,12 +5,10 @@ on:
     branches:
       - main
 
-    # Publish `v1.2.3` tags as releases.
     tags:
       - dev*
 
 env:
-  # TODO: Change variable to your image's name.qbx-container-registry
   REGISTRY: "registry.digitalocean.com/${{secrets.DIGITALOCEAN_CONTAINER_REGISTRY}}"
   IMAGE_NAME: webui-dev
 
@@ -27,6 +25,6 @@ jobs:
             docker-compose --file docker-compose.test.yml build
             docker-compose --file docker-compose.test.yml run sut
           else
-            docker build . --file ./WebUI/Dockerfile
+            echo "Docker Test Not Implemented Yet!"
           fi
 
