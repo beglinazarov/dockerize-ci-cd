@@ -66,6 +66,14 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
           envs: REGISTRY,GITHUB_SHA
+
+          deploy_path: /root/my-deployment
+          stack_file_name: docker-compose.yaml
+          keep_files: 5
+          args: up -d
+          docker_prune: 'false'
+          pull_images_first: 'false'
+          
           script: |
 
             # Snap like a Snack
@@ -77,6 +85,9 @@ jobs:
             
             # Stop running container
             docker-compose down
+            
+            # Stop running container
+            docker-compose pull
 
             # Run a new container from a new image 
             docker-compose up -d 
