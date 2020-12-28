@@ -53,7 +53,28 @@ jobs:
       
       - name: Push image to DigitalOcean Container Registry
         run: docker-compose push    
-            
+  
+  preDeployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: setup demo
+        run: |
+          mkdir test
+          touch test/oof.txt
+          touch test/.dot.txt
+      - name: Copy folder content recursively to remote
+        uses: ./
+        with:
+          local: test
+          remote: scp/directory
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASSWORD }}
+          privateKey: ${{ secrets.DO_SSH_PRIVATE_KEY}}
+ 
   deploy:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
