@@ -75,7 +75,7 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
           envs: REGISTRY,GITHUB_SHA 
-          scp_source: docker-compose.yml
+          scp_source: src/Web/Dockerfile
           scp_target: ~/apps
           before_script: |
             df -h
@@ -84,6 +84,7 @@ jobs:
           script: |
             # Positioning
             sudo docker-compose --version
+            sudo ip a
             sudo ls la
             # Snap like a Snack
             # Checking Doctl connect to docker 
