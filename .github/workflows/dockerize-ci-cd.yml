@@ -82,16 +82,16 @@ jobs:
             snap connect doctl:dot-docker
             
             # Let see what you have
-            docker-compose ps
+            #docker-compose ps
             
             # Stop running container
-            docker-compose down
+            #docker-compose down
             
             # Pull Down Staff
-            docker-compose pull
+            #docker-compose pull
 
             # Run a new container from a new image 
-            docker-compose up -d 
+            #docker-compose up -d 
             
       - name: Deploy to Docker Host
         uses: wshihadeh/docker-deployment-action@v1
