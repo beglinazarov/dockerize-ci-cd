@@ -42,9 +42,9 @@ jobs:
           target: "destination/folder"
           
       - name: Copy folder content recursively to remote
-        uses: ./
+      - uses: actions/checkout@v2 
         with:
-          local: test
+          local: ./
           remote: scp/directory
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
