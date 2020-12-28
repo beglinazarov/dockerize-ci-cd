@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         
-      - name: Docker Buils a Stack
+      - name: Docker build of a stack
         run: |
           if [ -f docker-compose.yml ]; then
             docker-compose --file docker-compose.yml build
@@ -59,6 +59,15 @@ jobs:
     needs: build
 
     steps:
+      # Login to the doctl on the runner
+      - name: Install doctl     
+        uses: digitalocean/action-doctl@v2
+        with:
+            token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login
+
       - name: Deploy to Digital Ocean droplet via SSH action
         uses: appleboy/ssh-action@v0.1.3
         with:
@@ -78,7 +87,7 @@ jobs:
             # Stop running container
             docker-compose down
             
-            # Stop running container
+            # Pull Down Staff
             docker-compose pull
 
             # Run a new container from a new image 
