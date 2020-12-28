@@ -69,6 +69,16 @@ jobs:
 
       - name: Deploy to Digital Ocean droplet via SSH action
         
+        uses: horochx/deploy-via-scp@master
+        with:
+          local: dist # eg: dist/*
+          remote: ${{ secrets.REMOTE }} # eg: /home/github-action/www
+          host: ${{ secrets.HOST }} # eg: example.com
+          port: ${{ secrets.PORT }} # eg: 22
+          user: ${{ secrets.USERNAME }} # eg: github-action
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+        
+      - name: Deploy to Digital Ocean droplet via SSH action        
         uses: kostya-ten/ssh-server-deploy@v4
         with:
           HOST: ${{ secrets.HOST }}
@@ -84,7 +94,6 @@ jobs:
           script: |
             # Positioning
             sudo docker-compose --version
-            sudo ip a
             sudo ls la
             # Snap like a Snack
             # Checking Doctl connect to docker 
