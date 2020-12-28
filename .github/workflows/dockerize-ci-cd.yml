@@ -80,13 +80,12 @@ jobs:
           #ssh_key: ${{ secrets.DO_SSH_PUBLIC_KEY }}
           #password: ${{ secrets.PASSWORD }}
         
-      - name: Update Apps & Services        
+      - name: Update Apps & Services via ReCreate approach  
         uses: kostya-ten/ssh-server-deploy@v4
         with:
           HOST: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
-          envs: REGISTRY,GITHUB_SHA 
           scp_source: src/Web/Dockerfile
           scp_target: ~/apps
           before_script: |
