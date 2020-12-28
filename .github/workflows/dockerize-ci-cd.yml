@@ -67,10 +67,11 @@ jobs:
           HOST: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
-          scp_source: app/*
+          scp_source: /
           scp_target: ~/qbx-apps-services
           before_script: |
             df -h
+            ls la
           after_script: |
             whoami
           script: |
