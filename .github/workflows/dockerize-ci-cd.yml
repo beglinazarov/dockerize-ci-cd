@@ -48,7 +48,8 @@ jobs:
       
       - name: Log in to DigitalOcean Container Registry with short-lived credentials
         run: doctl registry login
-
+      - name: Up and Run Apps & Services
+        run:  docker-compose --file "docker-compose.yml" up --detach
       - name: Push image to DigitalOcean Container Registry
         run: docker-compose push 
 
@@ -66,19 +67,7 @@ jobs:
       
       - name: Log in to DigitalOcean Container Registry with short-lived credentials
         run: doctl registry login
-
-      - name: Deploy to Digital Ocean droplet via SSH action
         
-        uses: horochx/deploy-via-scp@master
-        with:
-          local: dist/* # eg: dist/*
-          remote: ${{ secrets.REMOTE }} # eg: /home/github-action/www
-          host: ${{ secrets.HOST }} # eg: example.com
-          port: ${{ secrets.PORT }} # eg: 22
-          user: ${{ secrets.USERNAME }} # eg: github-action
-          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          #ssh_key: ${{ secrets.DO_SSH_PUBLIC_KEY }}
-          #password: ${{ secrets.PASSWORD }}
         
       - name: Update Apps & Services via ReCreate approach  
         uses: kostya-ten/ssh-server-deploy@v4
