@@ -53,13 +53,6 @@ jobs:
       
       - name: Push image to DigitalOcean Container Registry
         run: docker-compose push    
-  
-  preDeployment:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
       - name: setup demo
         run: |
           mkdir test
