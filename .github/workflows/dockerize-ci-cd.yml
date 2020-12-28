@@ -68,16 +68,23 @@ jobs:
         run: doctl registry login
 
       - name: Deploy to Digital Ocean droplet via SSH action
-        uses: appleboy/ssh-action@v0.1.3
+        
+        uses: kostya-ten/ssh-server-deploy@v4
         with:
           HOST: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
-          envs: REGISTRY,GITHUB_SHA          
+          envs: REGISTRY,GITHUB_SHA 
+          scp_source: docker-compose.yml
+          scp_target: ~/apps
+          before_script: |
+            df -h
+          after_script: |
+            whoami
           script: |
             # Positioning
             sudo docker-compose --version
-            sudo ls
+            sudo ls la
             # Snap like a Snack
             # Checking Doctl connect to docker 
             snap connect doctl:dot-docker
@@ -89,7 +96,8 @@ jobs:
             sudo docker-compose down
             
             # Pull Down Staff
-            #docker-compose pull
+            docker-compose pull
 
             # Run a new container from a new image 
-            #docker-compose up -d 
+            docker-compose up -d     
+  
