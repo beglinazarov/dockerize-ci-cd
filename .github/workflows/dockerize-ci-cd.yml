@@ -39,6 +39,12 @@ jobs:
           else
             echo "Docker Build Not Implemented Yet!"
           fi
+      # Login to the doctl on the runner
+      - name: Install doctl     
+        uses: digitalocean/action-doctl@v2
+        with:
+            token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+            
       - name: Log in to DigitalOcean Container Registry with short-lived credentials
         run: doctl registry login
       
@@ -54,13 +60,7 @@ jobs:
     needs: build
 
     steps:
-      # Login to the doctl on the runner
-      - name: Install doctl     
-        uses: digitalocean/action-doctl@v2
-        with:
-            token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-   
-        
+              
       - name: Update Apps & Services via ReCreate approach  
         uses: kostya-ten/ssh-server-deploy@v4
         with:
