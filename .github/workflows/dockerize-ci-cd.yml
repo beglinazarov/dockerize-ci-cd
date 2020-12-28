@@ -40,17 +40,7 @@ jobs:
           port: ${{ secrets.PORT }}
           source: "deploy.tar"
           target: "destination/folder"
-          
-      - name: Copy folder content recursively to remote
-      - uses: actions/checkout@v2 
-        with:
-          local: ./
-          remote: scp/directory
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          password: ${{ secrets.PASSWORD }}
-          privateKey: ${{ secrets.DO_SSH_PRIVATE_KEY}}
-        
+            
       - name: Docker build of a stack
         run: |
           if [ -f docker-compose.yml ]; then
