@@ -76,17 +76,17 @@ jobs:
           envs: REGISTRY,GITHUB_SHA          
           script: |
             # Positioning
-            docker-compose --version
+            sudo docker-compose --version
             sudo ls
             # Snap like a Snack
             # Checking Doctl connect to docker 
             snap connect doctl:dot-docker
             
             # Let see what you have
-            #docker-compose ps
+            sudo docker-compose ps
             
             # Stop running container
-            #docker-compose down
+            sudo docker-compose down
             
             # Pull Down Staff
             #docker-compose pull
