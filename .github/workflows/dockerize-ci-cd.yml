@@ -71,7 +71,7 @@ jobs:
           scp_target: ~/qbx-apps-services
           before_script: |
             df -h
-            ls la
+            ls
           after_script: |
             whoami
           script: |
