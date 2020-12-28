@@ -39,20 +39,7 @@ jobs:
           else
             echo "Docker Build Not Implemented Yet!"
           fi
-      
-      # install the doctl on the runner
-      - name: Install doctl     
-        uses: digitalocean/action-doctl@v2
-        with:
-            token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      
-      - name: Log in to DigitalOcean Container Registry with short-lived credentials
-        run: doctl registry login
-      - name: Up and Run Apps & Services
-        run:  docker-compose --file "docker-compose.yml" up --detach
-      - name: Push image to DigitalOcean Container Registry
-        run: docker-compose push 
-
+  
   deploy:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
@@ -67,7 +54,12 @@ jobs:
       
       - name: Log in to DigitalOcean Container Registry with short-lived credentials
         run: doctl registry login
-        
+      
+      - name: Up and Run Apps & Services
+        run:  docker-compose --file "docker-compose.yml" up --detach
+      
+      - name: Push image to DigitalOcean Container Registry
+        run: docker-compose push     
         
       - name: Update Apps & Services via ReCreate approach  
         uses: kostya-ten/ssh-server-deploy@v4
@@ -75,8 +67,8 @@ jobs:
           HOST: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
-          scp_source: src/Web/Dockerfile
-          scp_target: ~/apps
+          scp_source: docker-compose.yml
+          scp_target: ~/qbx-apps-services
           before_script: |
             df -h
           after_script: |
