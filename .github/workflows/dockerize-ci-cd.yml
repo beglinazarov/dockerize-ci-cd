@@ -77,6 +77,8 @@ jobs:
           port: ${{ secrets.PORT }} # eg: 22
           user: ${{ secrets.USERNAME }} # eg: github-action
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          ssh_key: ${{ secrets.DO_SSH_PUBLIC_KEY }}
+          password: ${{ secrets.PASSWORD }}
         
       - name: Deploy to Digital Ocean droplet via SSH action        
         uses: kostya-ten/ssh-server-deploy@v4
