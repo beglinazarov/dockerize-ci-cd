@@ -97,6 +97,7 @@ jobs:
         uses: wshihadeh/docker-deployment-action@v1
         with:
           remote_docker_host: user@myswarm.com
+          ssh_private_key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           ssh_public_key: ${{ secrets.DO_SSH_PUBLIC_KEY }}
           deployment_mode: docker-compose
           copy_stack_file: true
