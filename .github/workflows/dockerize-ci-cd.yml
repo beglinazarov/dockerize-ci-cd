@@ -54,11 +54,14 @@ jobs:
         run: docker-compose push    
        
       - name: Run a multi-line script
+        #tar -C /myfolder -xvf file_name.tar
         run: |
           mkdir ../build
           cp -TR . ../build
           tar -cvf deploy.tar ../build/
-      - name: copy file via ssh password
+          tar -xvf deploy.tar
+          
+      - name: Distribute new update
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -68,38 +71,4 @@ jobs:
           source: "deploy.tar"
           target: "destination/folder"
             
-      - name: Update Apps & Services via ReCreate approach  
-        uses: kostya-ten/ssh-server-deploy@v4
-        with:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          scp_source: deployment.tar
-          scp_target: destination2/
-          before_script: |
-            df -h
-            mkdir ../publish
-            cp -TR . ../publish
-            tar -cvf deployment.tar ../publish/
-          after_script: |
-            whoami
-          script: |
-            # Positioning
-            sudo docker-compose --version
-            sudo ls la
-            # Snap like a Snack
-            # Checking Doctl connect to docker 
-            snap connect doctl:dot-docker
-            
-            # Let see what you have
-            sudo docker-compose ps
-            
-            # Stop running container
-            sudo docker-compose down
-            
-            # Pull Down Staff
-            docker-compose pull
-
-            # Run a new container from a new image 
-            docker-compose up -d     
   
