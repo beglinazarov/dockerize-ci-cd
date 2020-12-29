@@ -25,16 +25,6 @@ jobs:
           else
             echo "Docker Test Not Implemented Yet!"
           fi
-          
-      - uses: actions/checkout@v2
-      - name: Copy folder content recursively to remote
-        with:
-          local: ./
-          remote: scp/directory
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          password: ${{ secrets.PASSWORD }}
-          privateKey: ${{ secrets.DO_SSH_PRIVATE_KEY}}
       
       - name: Run a multi-line script
         run: |
