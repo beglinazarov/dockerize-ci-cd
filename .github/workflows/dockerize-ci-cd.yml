@@ -25,7 +25,16 @@ jobs:
           else
             echo "Docker Test Not Implemented Yet!"
           fi
-          
+      
+      - name: Copy folder content recursively to remote
+        with:
+          local: ./
+          remote: scp/directory
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASSWORD }}
+          privateKey: ${{ secrets.DO_SSH_PRIVATE_KEY}}
+      
       - name: Run a multi-line script
         run: |
           mkdir ../build
@@ -75,8 +84,8 @@ jobs:
           HOST: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
-          scp_source: /
-          scp_target: ~/qbx-apps-services
+          scp_source: .
+          scp_target: destination
           before_script: |
             df -h
             ls
