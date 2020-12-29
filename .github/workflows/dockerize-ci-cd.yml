@@ -25,7 +25,8 @@ jobs:
           else
             echo "Docker Test Not Implemented Yet!"
           fi
-      
+          
+      - uses: actions/checkout@v2
       - name: Copy folder content recursively to remote
         with:
           local: ./
