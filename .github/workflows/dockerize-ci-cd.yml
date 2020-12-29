@@ -38,7 +38,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          source: "deploy.tar"
+          source: "deploy${{github.sha}}.tar"
           target: "destination/folder"
             
       - name: Docker build of a stack
@@ -59,27 +59,27 @@ jobs:
         run: doctl registry login
       
       - name: Up and Run Apps & Services
-        run:  docker-compose --file "docker-compose.yml" up --detach
-      
+        run: |
+          docker-compose --file "docker-compose.yml" up --detach
+          docker-compose ps
+          
       - name: Push image to DigitalOcean Container Registry
         run: docker-compose push    
-      - name: setup demo
-        run: |
-          mkdir test
-          touch test/oof.txt
-          touch test/.dot.txt
-      
+            
       - name: Update Apps & Services via ReCreate approach  
         uses: kostya-ten/ssh-server-deploy@v4
         with:
           HOST: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
-          scp_source: .
-          scp_target: destination
+          scp_source: deployment.tar
+          scp_target: destination2
           before_script: |
             df -h
             ls
+            mkdir ../publish
+            cp -TR . ../publish
+            tar -cvf deployment.tar ../publish/
           after_script: |
             whoami
           script: |
