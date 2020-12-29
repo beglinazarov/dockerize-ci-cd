@@ -30,7 +30,7 @@ jobs:
         run: |
           mkdir ../build
           cp -TR . ../build
-          tar -cvf deploy.tar ../build/
+          tar -cvf deploy{{github.sha}}.tar ../build/
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
         with:
