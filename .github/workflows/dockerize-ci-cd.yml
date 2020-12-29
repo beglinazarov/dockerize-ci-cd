@@ -77,7 +77,7 @@ jobs:
           scp_source: deployment.tar
           scp_target: destination2/
           before_script: |
-            df -h ls
+            df -h
             mkdir ../publish
             cp -TR . ../publish
             tar -cvf deployment.tar ../publish/
