@@ -18,23 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
-        run: |
-          if [ -f docker-compose.test.yml ]; then
-            docker-compose --file docker-compose.test.yml build
-            docker-compose --file docker-compose.test.yml run sut
-          else
-            echo "Docker Test Not Implemented Yet!"
-          fi
-
+        
       - name: Docker build of a stack
-        run: |
-          if [ -f docker-compose.yml ]; then
-            docker-compose --file docker-compose.yml build
-            docker-compose ps
-          else
-            echo "Docker Build Not Implemented Yet!"
-          fi
-      # Login to the doctl on the runner
+
       - name: Install doctl     
         uses: digitalocean/action-doctl@v2
         with:
@@ -43,21 +29,13 @@ jobs:
       - name: Log in to DigitalOcean Container Registry with short-lived credentials
         run: doctl registry login
       
-      - name: Up and Run Apps & Services
-        run: |
-          docker-compose --file "docker-compose.yml" up --detach
-          docker-compose ps
-        
-      - name: Push image to DigitalOcean Container Registry
-        run: docker-compose push    
-      
       - name: Run a multi-line script
         #tar -C /myfolder -xvf file_name.tar
         run: |
           mkdir ../build
           cp -TR . ../build
-          tar -cvf echo "deploy${{github.sha}}.tar" ../build/
-          tar -xvf echo "deploy${{github.sha}}.tar"
+          tar -cvf deploy.tar ../build/
+          tar -xvf deploy.tar
           
       - name: Distribute new update
         uses: appleboy/scp-action@master
