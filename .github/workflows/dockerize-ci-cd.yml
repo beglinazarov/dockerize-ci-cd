@@ -30,7 +30,7 @@ jobs:
         #tar -C /myfolder -xvf file_name.tar
         run: |
           mkdir build
-          cp -TR -f docker-compose.yml build
+          cp -TR -f src build
           tar -cvf deploy.tar build
           tar -xvf deploy.tar
           
