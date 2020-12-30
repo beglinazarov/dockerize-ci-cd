@@ -33,7 +33,7 @@ jobs:
         #tar -C /myfolder -xvf file_name.tar
         run: |
           mkdir ../build
-          cp -TR . ../build
+          cp -TR docker-compose.* ../build
           tar -cvf deploy.tar ../build/
           tar -xvf deploy.tar
           
