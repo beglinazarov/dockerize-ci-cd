@@ -29,9 +29,9 @@ jobs:
       - name: Run a multi-line script
         #tar -C /myfolder -xvf file_name.tar
         run: |
-          mkdir ../build
-          cp -TR docker-compose.yml ../build/
-          tar -cvf deploy.tar ../build/
+          mkdir build
+          cp -TR -f docker-compose.yml build
+          tar -cvf deploy.tar build
           tar -xvf deploy.tar
           
       - name: Distribute new update
@@ -41,7 +41,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          source: echo "deploy${{github.sha}}.tar"
+          source: deploy.tar
           target: "qbx/deployments/"
         
   
