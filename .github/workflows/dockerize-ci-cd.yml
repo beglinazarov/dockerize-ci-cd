@@ -3,7 +3,7 @@ name: Docker Deploy to Dev
 on:
   push:
     branches:
-      - !main
+      - main
     tags:
       - dev*
 
@@ -47,10 +47,26 @@ jobs:
         run: |
           docker-compose --file "docker-compose.yml" up --detach
           docker-compose ps
-          who am i
-          ip a
         
       - name: Push image to DigitalOcean Container Registry
         run: docker-compose push    
+      
+      - name: Run a multi-line script
+        #tar -C /myfolder -xvf file_name.tar
+        run: |
+          mkdir ../build
+          cp -TR . ../build
+          tar -cvf echo "deploy${{github.sha}}.tar" ../build/
+          tar -xvf echo "deploy${{github.sha}}.tar"
+          
+      - name: Distribute new update
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          source: echo "deploy${{github.sha}}.tar"
+          target: "qbx/deployments/"
         
   
