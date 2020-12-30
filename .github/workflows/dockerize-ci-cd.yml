@@ -45,7 +45,6 @@ jobs:
         run: |
           doctl registry login
           ls
-          ls ~/qbx/deployments/
           docker-compose --file "docker-compose.yml" up --detach
           docker-compose ps       
   
