@@ -30,9 +30,9 @@ jobs:
       - name: Run a multi-line script
         #tar -C /myfolder -xvf file_name.tar
         run: |
-          mkdir ../build
-          cp -TR docker-compose.yml ../build
-          tar -cvf echo "deploy${{github.sha}}.tar" ../build/
+          mkdir ../mabuild
+          cp -TR docker-compose.yml ../mabuild
+          tar -cvf echo "deploy${{github.sha}}.tar" ../mabuild/
           tar -xvf echo "deploy${{github.sha}}.tar"
           
       - name: Distribute new update
