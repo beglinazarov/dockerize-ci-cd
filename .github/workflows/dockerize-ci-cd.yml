@@ -42,12 +42,10 @@ jobs:
             token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
             
       - name: Log in to DigitalOcean Container Registry with short-lived credentials
-        run: doctl registry login
-        
-      - name: Up and Run Apps & Services
         run: |
-          ll
-          cd ~/qbx/deployments/
+          doctl registry login
+          ls
+          ls ~/qbx/deployments/
           docker-compose --file "docker-compose.yml" up --detach
           docker-compose ps       
   
