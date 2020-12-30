@@ -57,7 +57,7 @@ jobs:
         #tar -C /myfolder -xvf file_name.tar
         run: |
           mkdir ../build
-          cp -TR . ../build
+          cp -TR ./docker-compose ../build
           tar -cvf deploy.tar ../build/
           tar -xvf deploy.tar
           
@@ -69,6 +69,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: "deploy.tar"
-          target: "destination/folder"
+          target: "qbx/deployments/"
             
   
