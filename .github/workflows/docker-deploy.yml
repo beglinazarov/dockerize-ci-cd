@@ -1,4 +1,4 @@
-name: Docker CD to Private Host
+name: Docker Deployment
 
 on:
   push:
