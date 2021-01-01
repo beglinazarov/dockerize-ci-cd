@@ -3,7 +3,7 @@ name: Docker Deploy to Dev
 on:
   push:
     branches:
-      - '!main'
+      - 'main'
     tags:
       - dev*
 
@@ -35,7 +35,7 @@ jobs:
           port: ${{ secrets.PORT }}
           source: deploy.tar
           target: "qbx/deployments/"
-          
+        
       - name: Install doctl     
         uses: digitalocean/action-doctl@v2
         with:
