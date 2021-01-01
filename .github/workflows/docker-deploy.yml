@@ -9,17 +9,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: rsync deployments
-      uses: burnett01/rsync-deployments@4.1
-      with:
-        switches: -avzr --delete
-        path: src/
-        remote_path: /qbx/deployments/
-        remote_host: ${{ secrets.HOST }}
-        remote_port: ${{ secrets.PORT }}
-        remote_user: ${{ secrets.USER }}
-        remote_key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+      - name: Deploy to Docker Host
+        uses: wshihadeh/docker-deployment-action@v1
+        with:
+          remote_docker_host: root@104.131.117.112
+          ssh_private_key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          ssh_public_key: ${{ secrets.DO_SSH_PUBLIC_KEY }}
+          deployment_mode: docker-compose
+          copy_stack_file: true
+          deploy_path: /root/my-deployment
+          stack_file_name: docker-compose.yaml
+          keep_files: 5
+          args: up -d
+          docker_prune: 'false'
+          pull_images_first: 'true'
             
   
 
