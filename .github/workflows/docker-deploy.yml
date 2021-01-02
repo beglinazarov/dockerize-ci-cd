@@ -13,8 +13,9 @@ jobs:
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{secrets.HOST}}
-          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          username: ${{ secrets.PASSWORD }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          
           script: |
             mkdir deployment && cd deployment
             ls
