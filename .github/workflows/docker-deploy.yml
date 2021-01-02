@@ -10,19 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Docker Host
-        uses: wshihadeh/docker-deployment-action@v1
+        uses: appleboy/ssh-action@v0.1.4
         with:
-          remote_docker_host: root@104.131.117.112
-          ssh_private_key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          ssh_public_key: ${{ secrets.DO_SSH_PUBLIC_KEY }}
-          deployment_mode: docker-compose
-          copy_stack_file: true
-          deploy_path: /root/my-deployment
-          stack_file_name: docker-compose.yaml
-          keep_files: 5
-          args: up -d
-          docker_prune: 'false'
-          pull_images_first: 'true'
-            
+          host: ${{secrets.HOST}}
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          username: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          script: |
+            mkdir deployment && cd deployment
+            ls
+            docker-compose pull            
   
 
