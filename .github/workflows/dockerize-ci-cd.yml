@@ -24,7 +24,7 @@ jobs:
           mkdir build
           cp -f docker-compose.* .env build
           tar -cvf deploy.tar build
-          tar -xvf deploy.tar
+          
           
       - name: Distribute new update
         uses: appleboy/scp-action@master
@@ -44,10 +44,10 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           
           script: |
+            cd qbx/deployments/
             ls
-            cd ~/qbx/deployment/
             tar -xvf deploy.tar
-            cd /deploy/build/
+            cd /build/
             docker-compose pull  
         
       - name: Install doctl     
