@@ -23,7 +23,7 @@ jobs:
         run: |
           mkdir build
           cp -f docker-compose.* .env build
-          tar -cvf deploy.tar build
+          tar -cvf 'deploy${{ github.sha}}.tar' build
           
           
       - name: Distribute new update
@@ -33,7 +33,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          source: deploy.tar
+          source: 'deploy${{ github.sha}}.tar'
           target: "qbx/deployments/"
       
       - name: Recreate new release
@@ -45,10 +45,11 @@ jobs:
           script: |
             cd qbx/deployments/
             ls
-            tar -xvf deploy.tar
+            tar -xvf 'deploy${{ github.sha}}.tar'
             cd build
             ls
             docker-compose pull
+            docker-compose down
             docker-compose up --detach
             docker-compose ps
         
