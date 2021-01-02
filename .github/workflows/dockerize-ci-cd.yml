@@ -45,6 +45,7 @@ jobs:
           script: |
             cd qbx/deployments/
             ls
+            rm -r build
             tar -xvf 'deploy${{ github.sha}}.tar'
             cd build
             ls
