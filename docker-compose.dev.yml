@@ -1,8 +1,11 @@
 version: '3.4'
 services:
- eshopwebmvc:
+intro:
    environment:
-     - DOCKER_REGISTRY="registry.digitalocean.com/qbx-container-registry"
- eshoppublicapi:
+     - DOCKER_REGISTRY="160816001"
+ web:
    environment:
-     - DOCKER_REGISTRY="registry.digitalocean.com/qbx-container-registry"
+     - DOCKER_REGISTRY="160816001"
+ api:
+   environment:
+     - DOCKER_REGISTRY="160816001"

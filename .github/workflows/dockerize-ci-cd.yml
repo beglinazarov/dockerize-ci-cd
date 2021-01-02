@@ -36,7 +36,6 @@ jobs:
         run: docker-compose push    
      
       - name: Run a multi-line script
-        #tar -C /myfolder -xvf file_name.tar
         run: |
           mkdir build
           cp -f docker-compose.* .env build

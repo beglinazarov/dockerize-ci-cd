@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+intro:
+   environment:
+     - DOCKER_REGISTRY="DOCKER_REGISTRY=registry.digitalocean.com/qbx-container-registry/qbx-cloud"
+ web:
+   environment:
+     - DOCKER_REGISTRY="DOCKER_REGISTRY=registry.digitalocean.com/qbx-container-registry/qbx-cloud"
+ api:
+   environment:
+     - DOCKER_REGISTRY="DOCKER_REGISTRY=registry.digitalocean.com/qbx-container-registry/qbx-cloud"
