@@ -44,8 +44,8 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           
           script: |
-            cd ~/qbx/deployment/
             ls
+            cd ~/qbx/deployment/
             tar -xvf deploy.tar
             cd /deploy/build/
             docker-compose pull  
