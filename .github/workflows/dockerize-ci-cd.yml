@@ -17,7 +17,24 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
-       
+     
+     # Login to the doctl on the runner
+      - name: Install doctl     
+        uses: digitalocean/action-doctl@v2
+        with:
+            token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+            
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login
+      
+      - name: Up and Run Apps & Services
+        run: |
+          docker-compose --file "docker-compose.yml" up --detach
+          docker-compose ps
+        
+      - name: Push image to DigitalOcean Container Registry
+        run: docker-compose push    
+     
       - name: Run a multi-line script
         #tar -C /myfolder -xvf file_name.tar
         run: |
