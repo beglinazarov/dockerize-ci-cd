@@ -35,6 +35,20 @@ jobs:
           port: ${{ secrets.PORT }}
           source: deploy.tar
           target: "qbx/deployments/"
+      
+      - name: Recreate new release
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{secrets.HOST}}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          
+          script: |
+            cd ~/qbx/deployment/
+            ls
+            tar -xvf deploy.tar
+            cd /deploy/build/
+            docker-compose pull  
         
       - name: Install doctl     
         uses: digitalocean/action-doctl@v2
