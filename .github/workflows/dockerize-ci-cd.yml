@@ -42,23 +42,13 @@ jobs:
           host: ${{secrets.HOST}}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          
           script: |
             cd qbx/deployments/
-            ll
+            ls
             tar -xvf deploy.tar
             cd build
-            docker-compose pull  
+            ls
+            docker-compose pull
+            docker-compose up --detach
+            docker-compose ps
         
-      - name: Install doctl     
-        uses: digitalocean/action-doctl@v2
-        with:
-            token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-            
-      - name: Log in to DigitalOcean Container Registry with short-lived credentials
-        run: |
-          doctl registry login
-          ls
-          docker-compose --file "docker-compose.yml" up --detach
-          docker-compose ps       
-  
