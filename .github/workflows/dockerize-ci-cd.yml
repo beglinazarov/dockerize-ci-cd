@@ -45,9 +45,9 @@ jobs:
           
           script: |
             cd qbx/deployments/
-            ls
+            ll
             tar -xvf deploy.tar
-            cd /build/
+            cd build
             docker-compose pull  
         
       - name: Install doctl     
